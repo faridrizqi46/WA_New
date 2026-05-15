@@ -42,7 +42,7 @@ export default function PipelinePage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-theme(spacing.20))]">
+    <div className="flex flex-col h-full">
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight mb-1">Deal Pipeline</h1>
         <p className="text-sm text-muted-foreground">Manage your opportunities from lead to approval.</p>
@@ -64,13 +64,11 @@ export default function PipelinePage() {
             onStageChange={handleStageChange}
           />
         ) : (
-          <div className="h-full overflow-y-auto pb-6">
-            <PipelineTable
-              data={opportunities}
-              isLoading={isLoading}
-              onRowClick={handleRowClick}
-            />
-          </div>
+          <PipelineTable
+            data={opportunities}
+            isLoading={isLoading}
+            onRowClick={handleRowClick}
+          />
         )}
       </div>
 

@@ -35,8 +35,8 @@ export default function CompaniesPage() {
   };
 
   const handleExportCSV = () => {
-    // Simulated export
-    alert("Exporting to CSV...");
+    // Simulated export - replace with actual CSV generation
+    console.log("Exporting companies to CSV…");
   };
 
   return (

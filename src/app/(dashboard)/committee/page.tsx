@@ -33,7 +33,7 @@ export default function CommitteePage() {
   ];
 
   return (
-    <div className="flex flex-col h-[calc(100vh-theme(spacing.20))]">
+    <div className="flex flex-col h-full">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
@@ -63,7 +63,7 @@ export default function CommitteePage() {
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto pb-6">
+      <div className="flex-1">
         {isLoading ? (
           <div className="space-y-3">
             {Array.from({ length: 4 }).map((_, i) => (

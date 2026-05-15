@@ -61,7 +61,7 @@ export default function AICopilotPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-theme(spacing.20))]">
+    <div className="flex flex-col h-full">
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-1">
           <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">

@@ -38,11 +38,13 @@ export default function CompanyDetailPage({ params }: CompanyDetailPageProps) {
   ];
 
   return (
-    <div className="-mx-6 -mt-6 flex flex-col min-h-screen">
-      {/* Sticky Header */}
-      <CompanyHeader company={company} isLoading={isLoading} />
+    <div className="flex flex-col h-full">
+      {/* Fixed Header */}
+      <div className="shrink-0">
+        <CompanyHeader company={company} isLoading={isLoading} />
+      </div>
 
-      {/* Sticky Action Bar */}
+      {/* Fixed Action Bar */}
       {!isLoading && company && <StickyActionBar />}
 
       {/* Tab Content */}

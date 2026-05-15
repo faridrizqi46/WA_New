@@ -27,9 +27,11 @@ export function VisitFilters({ filters, onFilterChange, onScheduleClick }: Visit
     <div className="flex flex-col gap-3 mb-6 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative w-60">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <label htmlFor="visit-search" className="sr-only">Search visits or companies</label>
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" aria-hidden="true" />
           <Input
-            placeholder="Search visits or companies..."
+            id="visit-search"
+            placeholder="Search visits or companies…"
             className="pl-8 h-9"
             value={search}
             onChange={(e) => setSearch(e.target.value)}

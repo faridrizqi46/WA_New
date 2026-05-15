@@ -45,7 +45,7 @@ export default function VisitsPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-theme(spacing.20))]">
+    <div className="flex flex-col h-full">
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight mb-1">Field Visits</h1>
         <p className="text-sm text-muted-foreground">Schedule and track your client site visits.</p>
@@ -57,7 +57,7 @@ export default function VisitsPage() {
         onScheduleClick={handleScheduleVisit}
       />
 
-      <div className="flex-1 overflow-y-auto pb-6">
+      <div className="flex-1">
         {isLoading ? (
           <div className="space-y-3">
             {Array.from({ length: 4 }).map((_, i) => (

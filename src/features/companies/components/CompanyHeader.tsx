@@ -50,7 +50,7 @@ export function CompanyHeader({ company, isLoading }: CompanyHeaderProps) {
   ];
 
   return (
-    <div className="border-b bg-background sticky top-0 z-10 pb-4 pt-3 px-6 shadow-sm">
+    <div className="border-b bg-background pb-4 pt-3 px-6 shadow-sm">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
         <Link href="/companies" className="hover:text-foreground transition-colors">Companies</Link>

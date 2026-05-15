@@ -91,27 +91,31 @@ interface AICommandPaletteProps {
 
 export function AICommandPalette({ contextCompanyId, contextCompanyName, onCommandSelect }: AICommandPaletteProps) {
   return (
-    <div className="p-4">
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="h-4 w-4 text-indigo-600" />
-        <h3 className="font-semibold text-sm">Quick Commands</h3>
+    <div className="flex flex-col h-full">
+      <div className="p-4 border-b">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-indigo-600" aria-hidden="true" />
+          <h3 className="font-semibold text-sm">Quick Commands</h3>
+        </div>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {COMMAND_SUGGESTIONS.map((cmd) => {
           const IconComponent = ICONS[cmd.icon] || FileText;
           return (
-            <Button
+            <button
               key={cmd.command}
-              variant="outline"
-              className="h-auto p-3 flex-col items-start gap-2 text-left"
               onClick={() => onCommandSelect(cmd.command, cmd.prompt)}
+              aria-label={cmd.label}
+              className="w-full text-left p-3 rounded-lg border bg-card hover:bg-muted/50 hover:border-indigo-200 transition-all flex items-start gap-3"
             >
-              <div className="flex items-center gap-2">
-                <IconComponent className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs font-medium">{cmd.label}</span>
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center shrink-0">
+                <IconComponent className="h-4 w-4 text-indigo-600" aria-hidden="true" />
               </div>
-              <p className="text-[10px] text-muted-foreground leading-tight">{cmd.description}</p>
-            </Button>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium text-sm">{cmd.label}</div>
+                <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{cmd.description}</div>
+              </div>
+            </button>
           );
         })}
       </div>

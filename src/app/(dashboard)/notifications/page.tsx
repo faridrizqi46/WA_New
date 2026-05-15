@@ -28,7 +28,7 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-theme(spacing.20))]">
+    <div className="flex flex-col h-full">
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight mb-1">Notifications</h1>
         <p className="text-sm text-muted-foreground">Stay updated on your portfolio and client activities.</p>
@@ -41,7 +41,7 @@ export default function NotificationsPage() {
         unreadCount={unreadCount}
       />
 
-      <div className="flex-1 overflow-y-auto pb-6">
+      <div className="flex-1">
         {isLoading ? (
           <div className="space-y-3">
             {Array.from({ length: 4 }).map((_, i) => (

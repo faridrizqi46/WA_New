@@ -24,7 +24,7 @@ export default function CreditAnalysisPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-theme(spacing.20))]">
+    <div className="flex flex-col h-full">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
@@ -60,7 +60,7 @@ export default function CreditAnalysisPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto pb-6">
+      <div className="flex-1">
         {isLoading ? (
           <div className="grid grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (

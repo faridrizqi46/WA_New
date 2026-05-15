@@ -57,7 +57,7 @@ export function Sidebar() {
   const isActive = (href: string) => pathname.startsWith(href);
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r bg-slate-50 dark:bg-slate-950">
+    <aside className="flex h-full w-64 flex-col border-r bg-slate-50 dark:bg-slate-950">
       <div className="flex h-16 items-center px-6 border-b">
         <h1 className="text-lg font-bold tracking-tight">RM Workbench</h1>
       </div>
@@ -73,7 +73,7 @@ export function Sidebar() {
                 : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50"
             )}
           >
-            <item.icon className="h-4 w-4" />
+            <item.icon className="h-4 w-4" aria-hidden="true" />
             {item.name}
           </Link>
         ))}
@@ -91,7 +91,7 @@ export function Sidebar() {
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50"
               )}
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className="h-4 w-4" aria-hidden="true" />
               {item.name}
             </Link>
           ))}
@@ -110,7 +110,7 @@ export function Sidebar() {
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50"
               )}
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className="h-4 w-4" aria-hidden="true" />
               {item.name}
             </Link>
           ))}
