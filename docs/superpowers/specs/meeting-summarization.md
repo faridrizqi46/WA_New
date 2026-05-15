@@ -302,3 +302,195 @@ const mockLiveTranscript = [
 - Visit module: create Visit record from meeting with action items
 - AI Copilot: expose meeting data as context
 - Notifications: alert on processing complete
+
+---
+
+# Document Intelligence Feature - POC Lite
+
+## Overview
+A lightweight POC document intelligence module that provides OCR text extraction, table extraction, and auto-classification for uploaded documents. Uses mock data for POC.
+
+---
+
+## 1. Entry Points
+
+**Where RMs access the feature:**
+- **Sidebar:** New "Document Intelligence" item in main navigation
+- **Company Detail:** Documents tab with OCR action button
+- **AI Copilot:** "Summarize Document" command with upload option
+
+---
+
+## 2. Document Intelligence Page Layout (POC)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Document Intelligence                              [History] │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │                                                         ││
+│  │     📄 Drag PDF/image file here                         ││
+│  │        or click to browse                               ││
+│  │                                                         ││
+│  │     Supported: PDF, PNG, JPG, JPEG                      ││
+│  │                                                         ││
+│  └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│  Upload Progress: [████████░░░░] 80%                        │
+│                                                             │
+│  ┌──────────────────────┬──────────────────────────────────┐│
+│  │   ORIGINAL DOCUMENT  │   AI EXTRACTED DATA             ││
+│  │                      │                                  ││
+│  │   [PDF/Image View]   │   Document Type: Financial Stmt ││
+│  │                      │   Company: PT Astra International││
+│  │                      │   Year: 2024                     ││
+│  │                      │   Revenue: IDR 125,000,000,000   ││
+│  │                      │   Net Profit: IDR 15,500,000,000  ││
+│  │                      │   Total Assets: IDR 450,000,000   ││
+│  │                      │                                  ││
+│  │                      │   [Confidence: 94%] [Approve]    ││
+│  └──────────────────────┴──────────────────────────────────┘│
+│                                                             │
+│  EXTRACTED TABLES:                                          │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │ Balance Sheet (IDR Billion)          2023      2024    ││
+│  │ Total Assets                          420       450    ││
+│  │ Total Liabilities                     280       300    ││
+│  │ Equity                                140       150    ││
+│  └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│  AUTO-CLASSIFICATION:                                       │
+│  • Financial Statement (92% confidence)                     │
+│  • Audited (85% confidence)                                 │
+│  • Annual Report (78% confidence)                           │
+│                                                             │
+│  [Classify Again] [Export Data] [Link to Company]          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 3. Tech Stack (POC Lite)
+
+| Component | Technology |
+|-----------|------------|
+| **Frontend** | React with TypeScript |
+| **Styling** | Tailwind CSS |
+| **State** | React useState/useContext |
+| **Mock Data** | Static JSON/mock functions |
+| **Document Sim** | Pre-defined mock extracted data |
+
+---
+
+## 4. Mock Data
+
+```typescript
+// Mock Extracted Document Data
+const mockExtractedDocument = {
+  id: "doc-extract-001",
+  originalFileName: "Astra_Financial_Statement_2024.pdf",
+  documentType: "FINANCIAL_STATEMENT",
+  classification: {
+    type: "Financial Statement",
+    confidence: 92,
+    isAnnual: true,
+    isAudited: true,
+  },
+  companyName: "PT Astra International",
+  year: 2024,
+  extractedFields: {
+    revenue: "IDR 125,000,000,000",
+    netProfit: "IDR 15,500,000,000",
+    totalAssets: "IDR 450,000,000,000",
+    totalLiabilities: "IDR 300,000,000,000",
+    equity: "IDR 150,000,000,000",
+    dscr: "1.35x",
+    leverage: "2.0x",
+  },
+  extractedTables: [
+    {
+      title: "Balance Sheet (IDR Billion)",
+      headers: ["Item", "2023", "2024"],
+      rows: [
+        ["Total Assets", "420", "450"],
+        ["Total Liabilities", "280", "300"],
+        ["Equity", "140", "150"],
+      ],
+    },
+    {
+      title: "Income Statement (IDR Billion)",
+      headers: ["Item", "2023", "2024"],
+      rows: [
+        ["Revenue", "115", "125"],
+        ["Cost of Goods Sold", "70", "75"],
+        ["Gross Profit", "45", "50"],
+        ["Operating Expense", "25", "28"],
+        ["Net Profit", "12", "15.5"],
+      ],
+    },
+  ],
+  rawText: "PT Astra International Financial Statement... [mock OCR text]",
+  confidence: 94,
+  processedAt: "2025-05-15T10:30:00Z",
+};
+
+// Mock Document History
+const mockDocumentHistory = [
+  { id: "doc-001", fileName: "Astra_Financial_Statement_2024.pdf", type: "FINANCIAL_STATEMENT", processedAt: "2025-05-15", status: "COMPLETED" },
+  { id: "doc-002", fileName: "NPWP_PT_Sentosa.pdf", type: "COMPLIANCE", processedAt: "2025-05-14", status: "COMPLETED" },
+  { id: "doc-003", fileName: "Deed_of_Establishment.pdf", type: "LEGAL", processedAt: "2025-05-13", status: "COMPLETED" },
+];
+```
+
+---
+
+## 5. Document Types
+
+| Type | Description |
+|------|-------------|
+| FINANCIAL_STATEMENT | Audited financial statements (balance sheet, income statement) |
+| LEGAL | Deed of establishment, articles of association |
+| COMPLIANCE | NPWP, SIUP, operating license |
+| COLLATERAL | Asset certificates, valuation reports |
+| ID_CARD | KTP, director identification |
+| CONTRACT | Loan agreements, facility letters |
+| OTHER | Uncategorized documents |
+
+---
+
+## 6. Implementation Tasks (POC)
+
+### Phase 1: Design Documentation
+- [x] Add Document Intelligence spec to `docs/superpowers/specs/meeting-summarization.md`
+
+### Phase 2: Types & Mock Data
+- [ ] Add document intelligence types to `src/types/index.ts`
+- [ ] Add document intelligence mock data to `src/lib/mock-data.ts`
+
+### Phase 3: UI Components
+- [ ] Create DocumentIntelligencePage component
+- [ ] Create document upload zone with drag & drop
+- [ ] Create side-by-side document viewer and extracted data panel
+- [ ] Create extracted tables display
+- [ ] Create classification results display
+- [ ] Create document history list
+
+### Phase 4: Page & Navigation
+- [ ] Create `/documents` page
+- [ ] Add "Document Intelligence" to sidebar
+
+### Phase 5: Integration
+- [ ] Link from Company Documents tab
+- [ ] Link from AI Copilot "Summarize Document" command
+
+---
+
+## 7. What to Build Later (Full Version)
+
+- Real OCR API integration (Google Cloud Vision / AWS Textract)
+- Real table extraction (Amazon Textract / Azure Form Recognizer)
+- Real document classification AI
+- S3 storage for original documents
+- Company document linking and management
+- Version history for re-processed documents

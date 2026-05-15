@@ -2262,3 +2262,85 @@ export async function getMockRecentUploads(): Promise<ApiResponse<RecentUpload[]
   await delay(250);
   return { success: true, data: MOCK_RECENT_UPLOADS, meta: { page: 1, limit: 10, total: MOCK_RECENT_UPLOADS.length } };
 }
+
+// ─── Document Intelligence ──────────────────────────────────────
+
+import { ExtractedDocument, DocumentHistoryItem } from "@/types";
+
+export const MOCK_EXTRACTED_DOCUMENT: ExtractedDocument = {
+  id: "doc-extract-001",
+  originalFileName: "Astra_Financial_Statement_2024.pdf",
+  fileSize: 2456000,
+  mimeType: "application/pdf",
+  documentType: "FINANCIAL_STATEMENT",
+  classification: {
+    type: "FINANCIAL_STATEMENT",
+    confidence: 92,
+    isAnnual: true,
+    isAudited: true,
+  },
+  companyName: "PT Astra International",
+  year: 2024,
+  extractedFields: [
+    { label: "Revenue", value: "IDR 125,000,000,000", confidence: 96 },
+    { label: "Net Profit", value: "IDR 15,500,000,000", confidence: 94 },
+    { label: "Total Assets", value: "IDR 450,000,000,000", confidence: 97 },
+    { label: "Total Liabilities", value: "IDR 300,000,000,000", confidence: 95 },
+    { label: "Equity", value: "IDR 150,000,000,000", confidence: 93 },
+    { label: "DSCR", value: "1.35x", confidence: 88 },
+    { label: "Leverage", value: "2.0x", confidence: 89 },
+  ],
+  extractedTables: [
+    {
+      title: "Balance Sheet (IDR Billion)",
+      headers: ["Item", "2023", "2024"],
+      rows: [
+        ["Total Assets", "420", "450"],
+        ["Total Liabilities", "280", "300"],
+        ["Equity", "140", "150"],
+      ],
+    },
+    {
+      title: "Income Statement (IDR Billion)",
+      headers: ["Item", "2023", "2024"],
+      rows: [
+        ["Revenue", "115", "125"],
+        ["Cost of Goods Sold", "70", "75"],
+        ["Gross Profit", "45", "50"],
+        ["Operating Expense", "25", "28"],
+        ["Net Profit", "12", "15.5"],
+      ],
+    },
+  ],
+  rawText: "PT Astra International Financial Statement for the year ended December 31, 2024...",
+  confidence: 94,
+  processedAt: new Date(Date.now() - 3600000 * 2).toISOString(),
+  uploadedBy: "Alex RM",
+  linkedCompanyId: "comp-1",
+  linkedCompanyName: "PT Astra International",
+};
+
+export const MOCK_DOCUMENT_HISTORY: DocumentHistoryItem[] = [
+  { id: "doc-001", fileName: "Astra_Financial_Statement_2024.pdf", documentType: "FINANCIAL_STATEMENT", processedAt: new Date(Date.now() - 3600000 * 2).toISOString(), status: "COMPLETED", confidence: 94, linkedCompanyName: "PT Astra International" },
+  { id: "doc-002", fileName: "NPWP_PT_Sentosa.pdf", documentType: "COMPLIANCE", processedAt: new Date(Date.now() - 86400000).toISOString(), status: "COMPLETED", confidence: 91, linkedCompanyName: "PT Sentosa Jaya" },
+  { id: "doc-003", fileName: "Deed_of_Establishment.pdf", documentType: "LEGAL", processedAt: new Date(Date.now() - 86400000 * 2).toISOString(), status: "COMPLETED", confidence: 87, linkedCompanyName: "TechCorp Inc." },
+  { id: "doc-004", fileName: "Asset_Certificate_Land.pdf", documentType: "COLLATERAL", processedAt: new Date(Date.now() - 86400000 * 3).toISOString(), status: "COMPLETED", confidence: 82, linkedCompanyName: "Global Logistics" },
+  { id: "doc-005", fileName: "Director_KTP.pdf", documentType: "ID_CARD", processedAt: new Date(Date.now() - 86400000 * 5).toISOString(), status: "COMPLETED", confidence: 96, linkedCompanyName: "Bintang Retail" },
+];
+
+export const MOCK_CLASSIFICATION_OPTIONS = [
+  { type: "FINANCIAL_STATEMENT", label: "Financial Statement", confidence: 92 },
+  { type: "LEGAL", label: "Legal Document", confidence: 78 },
+  { type: "COMPLIANCE", label: "Compliance Document", confidence: 85 },
+  { type: "COLLATERAL", label: "Collateral Document", confidence: 73 },
+];
+
+export async function getMockExtractedDocument(): Promise<ApiResponse<ExtractedDocument>> {
+  await delay(1500);
+  return { success: true, data: MOCK_EXTRACTED_DOCUMENT };
+}
+
+export async function getMockDocumentHistory(): Promise<ApiResponse<DocumentHistoryItem[]>> {
+  await delay(400);
+  return { success: true, data: MOCK_DOCUMENT_HISTORY, meta: { page: 1, limit: 20, total: MOCK_DOCUMENT_HISTORY.length } };
+}

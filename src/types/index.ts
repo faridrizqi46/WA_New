@@ -889,6 +889,65 @@ export interface RecentUpload {
   status: "Processing..." | "Complete";
 }
 
+// ─── Document Intelligence ────────────────────────────────────────
+
+export type DocumentType = "FINANCIAL_STATEMENT" | "LEGAL" | "COMPLIANCE" | "COLLATERAL" | "ID_CARD" | "CONTRACT" | "OTHER";
+
+export interface DocumentClassification {
+  type: DocumentType;
+  confidence: number;
+  isAnnual?: boolean;
+  isAudited?: boolean;
+}
+
+export interface ExtractedTable {
+  title: string;
+  headers: string[];
+  rows: string[][];
+}
+
+export interface ExtractedField {
+  label: string;
+  value: string;
+  confidence?: number;
+}
+
+export interface ExtractedDocument {
+  id: string;
+  originalFileName: string;
+  fileSize?: number;
+  mimeType?: string;
+  documentType: DocumentType;
+  classification: DocumentClassification;
+  companyName?: string;
+  year?: number;
+  extractedFields: ExtractedField[];
+  extractedTables: ExtractedTable[];
+  rawText?: string;
+  confidence: number;
+  processedAt: string;
+  uploadedBy?: string;
+  linkedCompanyId?: string;
+  linkedCompanyName?: string;
+}
+
+export interface DocumentProcessingResult {
+  id: string;
+  status: "PROCESSING" | "COMPLETED" | "FAILED";
+  extractedDocument?: ExtractedDocument;
+  errorMessage?: string;
+}
+
+export interface DocumentHistoryItem {
+  id: string;
+  fileName: string;
+  documentType: DocumentType;
+  processedAt: string;
+  status: "COMPLETED" | "FAILED";
+  confidence?: number;
+  linkedCompanyName?: string;
+}
+
 // ─── Compliance ─────────────────────────────────────────────────
 
 export interface ComplianceCheckItem {

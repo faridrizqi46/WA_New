@@ -32,6 +32,7 @@ const MENU_ITEMS = [
   { name: "Pipeline", href: "/pipeline", icon: KanbanSquare },
   { name: "Visits", href: "/visits", icon: MapPin },
   { name: "Meeting", href: "/meetings", icon: Mic },
+  { name: "Documents", href: "/documents", icon: FileText },
   { name: "AI Copilot", href: "/ai-copilot", icon: Bot },
   { name: "Credit Analysis", href: "/credit-analysis", icon: BarChart3 },
   { name: "Risk Monitoring", href: "/risk-monitoring", icon: ShieldAlert },
