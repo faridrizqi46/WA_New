@@ -2139,3 +2139,126 @@ export async function getMockComplianceChecklist(params?: ComplianceChecklistFil
   }
   return { success: true, data: filtered, meta: { page: 1, limit: 20, total: filtered.length } };
 }
+
+// ─── Meetings ──────────────────────────────────────────────
+
+import { Meeting, RecentUpload } from "@/types";
+
+export const MOCK_MEETINGS: Meeting[] = [
+  {
+    id: "mtg-001",
+    companyId: "comp-1",
+    companyName: "PT Astra International",
+    title: "Credit Facility Discussion",
+    mode: "REAL_TIME",
+    status: "COMPLETED",
+    duration: 45,
+    date: "12 May 2025",
+    rm: "Alex",
+    attendees: [
+      { name: "Alex RM", role: "RM", organization: "Bank", isRM: true },
+      { name: "Budi Santoso", role: "CFO", organization: "PT Astra", isRM: false },
+      { name: "Dr. Rinawaty", role: "Credit Dept Head", organization: "PT Astra", isRM: false },
+    ],
+    transcript: [
+      { id: "t1", speaker: "RM", text: "We'd like to discuss the term sheet for the new credit facility.", timestamp: "00:05:23" },
+      { id: "t2", speaker: "Client", text: "We're looking at a 3-year revolving facility with flexible collateral options.", timestamp: "00:05:31" },
+      { id: "t3", speaker: "RM", text: "What collateral are you proposing?", timestamp: "00:05:45" },
+      { id: "t4", speaker: "Client", text: "We're proposing land and building as primary collateral, plus vehicle fleet.", timestamp: "00:05:58" },
+      { id: "t5", speaker: "RM", text: "That aligns with our requirements. What about the facility amount?", timestamp: "00:06:15" },
+      { id: "t6", speaker: "Client", text: "We're requesting IDR 7B but open to discussing IDR 5B based on our credit profile.", timestamp: "00:06:28" },
+    ],
+    summary: "Discussion of new IDR 5Billion revolving credit facility for 3 years. Client requests flexibility on collateral requirements and prefers land + building over machinery. Decision expected within 2 weeks.",
+    decisions: [
+      "Facility amount agreed at IDR 5B (down from 7B request)",
+      "Tenor confirmed at 36 months",
+      "Client to provide additional collateral documentation",
+    ],
+    actionItems: [
+      { id: "a1", text: "Prepare draft term sheet", status: "IN_PROGRESS", priority: "HIGH", assignee: "Alex RM" },
+      { id: "a2", text: "Request 3-year audited financials", status: "PENDING", priority: "HIGH", assignee: "Alex RM" },
+      { id: "a3", text: "Schedule collateral appraisal", status: "PENDING", priority: "MEDIUM", assignee: "Alex RM" },
+      { id: "a4", text: "Follow-up meeting next week", status: "PENDING", priority: "MEDIUM", assignee: "Alex RM" },
+    ],
+    termSheet: {
+      facilityType: "Revolving Credit",
+      amount: "IDR 5,000,000,000",
+      tenor: "36 months",
+      interest: "JIBOR + 2.5% p.a.",
+      collateral: "Land & Building (SHM) + Vehicle (BPKB)",
+      purpose: "Working capital",
+    },
+    documentsRequested: [
+      "Last 3 year audited financial statements",
+      "Current facility agreement with Bank XYZ",
+      "Asset certificates for proposed collateral",
+      "Company NPWP & SIUP",
+    ],
+    riskFlags: [
+      { id: "r1", type: "WARNING", message: "Current D/E ratio 3.2x - above bank threshold of 2.5x", metric: "D/E", value: "3.2x", threshold: "2.5x" },
+      { id: "r2", type: "WARNING", message: "Existing facility utilization at 85%", metric: "Utilization", value: "85%", threshold: "80%" },
+    ],
+    detectedTopics: ["Credit facility", "Expansion plan", "New collateral", "Term sheet discussion"],
+    createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
+  },
+  {
+    id: "mtg-002",
+    companyId: "comp-2",
+    companyName: "PT Sentosa Jaya",
+    title: "Quarterly Review",
+    mode: "UPLOAD",
+    status: "COMPLETED",
+    duration: 30,
+    date: "10 May 2025",
+    rm: "Alex",
+    attendees: [
+      { name: "Alex RM", role: "RM", organization: "Bank", isRM: true },
+      { name: "John Doe", role: "Finance Director", organization: "PT Sentosa Jaya", isRM: false },
+    ],
+    transcript: [
+      { id: "t1", speaker: "RM", text: "Let's review the Q1 performance metrics.", timestamp: "00:01:00" },
+      { id: "t2", speaker: "Client", text: "Revenue is up 12% compared to same period last year.", timestamp: "00:02:15" },
+    ],
+    summary: "Quarterly performance review completed. Company showing positive growth trajectory.",
+    decisions: [
+      "Continue current facility structure",
+      "Schedule next review in 3 months",
+    ],
+    actionItems: [
+      { id: "a1", text: "Update financial projections", status: "PENDING", priority: "MEDIUM", assignee: "Alex RM" },
+    ],
+    termSheet: undefined,
+    documentsRequested: [
+      "Q1 2025 financial statements",
+      "Updated cash flow projection",
+    ],
+    riskFlags: [],
+    detectedTopics: ["Quarterly review", "Performance metrics"],
+    createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+  },
+];
+
+export const MOCK_RECENT_UPLOADS: RecentUpload[] = [
+  { id: "up-001", name: "PT Astra Meeting", date: "12 May 2025", status: "Complete" },
+  { id: "up-002", name: "Semen Indonesia Q1 Review", date: "10 May 2025", status: "Complete" },
+  { id: "up-003", name: "TechCorp Inc. Discussion", date: "8 May 2025", status: "Processing..." },
+];
+
+export async function getMockMeetings(): Promise<ApiResponse<Meeting[]>> {
+  await delay(400);
+  return { success: true, data: MOCK_MEETINGS, meta: { page: 1, limit: 20, total: MOCK_MEETINGS.length } };
+}
+
+export async function getMockMeetingById(id: string): Promise<ApiResponse<Meeting>> {
+  await delay(300);
+  const meeting = MOCK_MEETINGS.find((m) => m.id === id);
+  if (!meeting) {
+    return { success: false, message: "Meeting not found", data: null as any };
+  }
+  return { success: true, data: meeting };
+}
+
+export async function getMockRecentUploads(): Promise<ApiResponse<RecentUpload[]>> {
+  await delay(250);
+  return { success: true, data: MOCK_RECENT_UPLOADS, meta: { page: 1, limit: 10, total: MOCK_RECENT_UPLOADS.length } };
+}

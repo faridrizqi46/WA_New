@@ -815,6 +815,80 @@ export interface IntegrationSetting {
   status: "CONNECTED" | "DISCONNECTED" | "ERROR";
 }
 
+// ─── Meeting ─────────────────────────────────────────────────
+
+export type MeetingMode = "REAL_TIME" | "UPLOAD";
+export type MeetingStatus = "IN_PROGRESS" | "PROCESSING" | "COMPLETED" | "FAILED";
+
+export interface TranscriptSegment {
+  id: string;
+  speaker: string;
+  text: string;
+  timestamp: string;
+}
+
+export interface MeetingActionItem {
+  id: string;
+  text: string;
+  status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
+  priority: "LOW" | "MEDIUM" | "HIGH";
+  assignee?: string;
+}
+
+export interface TermSheetDraft {
+  facilityType: string;
+  amount: string;
+  tenor: string;
+  interest: string;
+  collateral: string;
+  purpose: string;
+}
+
+export interface RiskFlag {
+  id: string;
+  type: "WARNING" | "ALERT" | "INFO";
+  message: string;
+  metric?: string;
+  value?: string;
+  threshold?: string;
+}
+
+export interface MeetingAttendee {
+  name: string;
+  role?: string;
+  organization?: string;
+  isRM: boolean;
+}
+
+export interface Meeting {
+  id: string;
+  companyId?: string;
+  companyName?: string;
+  title: string;
+  mode: MeetingMode;
+  status: MeetingStatus;
+  duration?: number;
+  date?: string;
+  rm?: string;
+  attendees: MeetingAttendee[];
+  transcript: TranscriptSegment[];
+  summary?: string;
+  decisions: string[];
+  actionItems: MeetingActionItem[];
+  termSheet?: TermSheetDraft;
+  documentsRequested: string[];
+  riskFlags: RiskFlag[];
+  detectedTopics: string[];
+  createdAt: string;
+}
+
+export interface RecentUpload {
+  id: string;
+  name: string;
+  date: string;
+  status: "Processing..." | "Complete";
+}
+
 // ─── Compliance ─────────────────────────────────────────────────
 
 export interface ComplianceCheckItem {

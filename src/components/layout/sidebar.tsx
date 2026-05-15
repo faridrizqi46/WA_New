@@ -2,18 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  LayoutDashboard, 
-  Building2, 
-  KanbanSquare, 
-  MapPin, 
-  Bot, 
-  BarChart3, 
-  ShieldAlert, 
-  Landmark, 
-  Users, 
-  BellRing, 
-  FileText, 
+import {
+  LayoutDashboard,
+  Building2,
+  KanbanSquare,
+  MapPin,
+  Bot,
+  BarChart3,
+  ShieldAlert,
+  Landmark,
+  Users,
+  BellRing,
+  FileText,
   Settings,
   ScrollText,
   ClipboardCheck,
@@ -22,6 +22,7 @@ import {
   Layers,
   Workflow,
   Activity,
+  Mic,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,7 @@ const MENU_ITEMS = [
   { name: "Companies", href: "/companies", icon: Building2 },
   { name: "Pipeline", href: "/pipeline", icon: KanbanSquare },
   { name: "Visits", href: "/visits", icon: MapPin },
+  { name: "Meeting", href: "/meetings", icon: Mic },
   { name: "AI Copilot", href: "/ai-copilot", icon: Bot },
   { name: "Credit Analysis", href: "/credit-analysis", icon: BarChart3 },
   { name: "Risk Monitoring", href: "/risk-monitoring", icon: ShieldAlert },
