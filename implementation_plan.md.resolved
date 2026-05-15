@@ -1,0 +1,96 @@
+# Sprint 3 — Pipeline Module
+
+**Goal:** Sales + Credit Workflow Engine — track opportunities from lead to approval.
+
+Per `CLAUDE_NEW.md` (Week 8–9), this module is 🔴 Critical for MVP.
+
+## Scope
+
+### Pipeline Stages (sequential, no skipping)
+```
+Lead → Initial Contact → Financial Collection → Analysis → Proposal → Committee → Approved / Rejected
+```
+
+### UI Layout
+- **Primary View**: Kanban Board with drag-and-drop (`dnd-kit`)
+- **Secondary View**: Table View (toggleable)
+- **Filter Bar**: Stage · RM · Industry · Deal Value · Date Range
+- **Opportunity Detail**: Side Drawer (activity feed, task checklist, document list, AI placeholder)
+
+## Open Questions
+
+> [!IMPORTANT]
+> **dnd-kit dependency**: The Kanban drag-and-drop requires `@dnd-kit/core` and `@dnd-kit/sortable`. Should I install these?
+> **Default answer: Yes** — proceeding unless you say otherwise.
+
+## Proposed Changes
+
+---
+
+### 1. Dependencies
+- Install `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`
+
+### 2. Types (`src/types/index.ts`)
+New types:
+- `PipelineStage` enum: `LEAD | INITIAL_CONTACT | FINANCIAL_COLLECTION | ANALYSIS | PROPOSAL | COMMITTEE | APPROVED | REJECTED`
+- `PipelineOpportunity` interface: id, title, companyId, companyName, rmId, rmName, stage, dealValue, probability, notes, createdAt, updatedAt
+- `PipelineActivity` interface: for the activity timeline
+- `PipelineTask` interface: for the checklist
+
+### 3. Mock Data (`src/lib/mock-data.ts`)
+New functions:
+- `getMockOpportunities(params?)` — filterable, paginated list
+- `getMockOpportunityById(id)` — full detail with activities, tasks, documents
+- `getMockPipelineSummary()` — deal counts and values per stage (for Kanban column headers)
+
+### 4. Feature Hooks (`src/features/pipeline/hooks/`)
+- `usePipeline.ts` — fetch opportunities with filter state
+- `useOpportunity.ts` — fetch single opportunity detail
+
+### 5. Pipeline List/Kanban Page (`/pipeline`)
+
+#### [NEW] `src/features/pipeline/components/KanbanBoard.tsx`
+- 8 columns (one per stage), drag-and-drop between stages using `@dnd-kit`
+- Each card shows: Company name, Deal value, Probability badge, RM, alert count
+- Column headers show deal count + total value
+- `APPROVED` and `REJECTED` columns are terminal — cards dropped there trigger a confirmation
+
+#### [NEW] `src/features/pipeline/components/KanbanCard.tsx`
+- Draggable card component
+
+#### [NEW] `src/features/pipeline/components/PipelineTable.tsx`
+- TanStack table view of all opportunities
+- Columns: Company, Title, Stage, Deal Value, Probability, RM, Last Updated
+
+#### [NEW] `src/features/pipeline/components/PipelineFilters.tsx`
+- View toggle (Kanban ↔ Table), search, stage/RM/industry filters
+
+#### [NEW] `src/app/(dashboard)/pipeline/page.tsx`
+- Assembles the page with filter bar and view toggle
+
+### 6. Opportunity Detail Drawer (`/pipeline/[id]`)
+
+#### [NEW] `src/features/pipeline/components/OpportunityDrawer.tsx`
+- Sheet/drawer that slides in from the right when clicking a Kanban card or table row
+- Left section: Stage progress indicator, company info, deal metadata
+- Activity Timeline: list of logged activities with timestamps
+- Task Checklist: items with checkbox state
+- Document list: linked files placeholder
+
+#### [NEW] `src/app/(dashboard)/pipeline/[id]/page.tsx`
+- Standalone page for direct URL access to an opportunity
+
+---
+
+## Verification Plan
+
+### Automated Tests
+- `npm run build` — TypeScript compilation must pass.
+
+### Manual Verification
+- `/pipeline` renders the Kanban board with 8 stage columns.
+- Cards can be dragged between stages (mock state update, no persistence required).
+- Clicking a card opens the Opportunity Detail drawer.
+- Toggle between Kanban and Table views works.
+- Filter by stage and search by company/title works.
+- `APPROVED`/`REJECTED` columns are visually distinct (terminal state styling).
