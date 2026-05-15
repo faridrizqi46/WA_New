@@ -36,6 +36,35 @@ yarn-error.log*
 # vercel
 .vercel
 
+# skills
+.kilo
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# tsc output files
+tsc_*.txt
+tsconfig.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+*.log
+
+# Prisma (if used)
+/prisma/*.db
+/prisma/*.db-journal
+
+# Aiven / remote configs (local dev)
+.aiven/
+
+# temporary files
+*.tmp
+*.temp
+.cache/
