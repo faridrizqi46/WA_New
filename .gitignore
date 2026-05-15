@@ -39,6 +39,9 @@ yarn-error.log*
 # skills
 .kilo
 
+# docs (specs and design docs)
+docs/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
